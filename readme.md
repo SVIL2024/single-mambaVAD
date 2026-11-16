@@ -1,155 +1,124 @@
 # MambaVAD
-Official PyTorch implementation of the manuscript "MambaVAD: Learning Temporal Dynamics for Weakly Supervised Video Anomaly Detection via Bidirectional Mamba with Future-Score Alignment".
 
-## Project Overview
-MambaVAD is a weakly supervised video anomaly detection (WSVAD) framework based on the Mamba State Space Model. The core idea is to leverage a **bidirectional Mamba encoder** to capture both forward and backward temporal dependencies in video sequences, enabling more effective anomaly detection. The model takes pre-extracted CLIP features as input and applies multi-scale temporal fusion, normal prototype contrastive learning, and future score prediction for robust anomaly detection.
+Official PyTorch implementation of the manuscript
 
-## Features
-- **Bidirectional Mamba Encoder**: Forward and backward scan with concatenation and projection to capture bidirectional temporal context
-- **Multi-scale Temporal Fusion**: Optional multi-scale feature extraction with configurable scale factors (e.g., 1, 8, 16)
-- **Normal Prototype Contrastive Loss**: Encourages compact normal feature representation and separates anomaly features from normal prototypes
-- **Future Score Prediction Bridge**: Auxiliary task that predicts future classification scores from hidden states
-- **Mamba1/Mamba2 Support**: Configurable Mamba version via `--mamba-version`
-- **Support for UCF-Crime and XD-Violence Datasets**
+> **MambaVAD: A Shared-Parameter Multi-Scale Mamba Network for Efficient Weakly Supervised Video Anomaly Detection**
 
-## Project Structure
-```
-.
-├── list/                         # Ground truth generation and data list scripts
-│   ├── make_gt_mAP_ucf.py
-│   ├── make_gt_mAP_xd.py
-│   ├── make_gt_ucf.py
-│   ├── make_gt_xd.py
-│   ├── make_list_ucf.py
-│   └── make_list_xd.py
-├── src_sgl/                      # Single bidirectional Mamba VAD implementation
-│   ├── clip/                     # CLIP model components
-│   │   ├── __init__.py
-│   │   ├── clip.py
-│   │   ├── model.py
-│   │   └── simple_tokenizer.py
-│   ├── utils/                    # Utility functions
-│   │   ├── dataset.py            # UCFDataset and XDDataset loaders
-│   │   ├── layers.py
-│   │   ├── lr_warmup.py
-│   │   ├── tools.py              # Feature processing, prompt text, batch labels
-│   │   ├── ucf_detectionMAP.py
-│   │   └── xd_detectionMAP.py
-│   ├── mamba_model.py            # Mamba building blocks (MambaResBlock, BiMambaEncoder, etc.)
-│   ├── mamba_vad_dual_model.py   # SingleMambaVAD model (full architecture)
-│   ├── ucf_option.py             # UCF-Crime dataset options/hyperparameters
-│   ├── ucf_train_sgl.py          # UCF-Crime training script
-│   ├── ucf_test_sgl.py           # UCF-Crime testing script
-│   ├── xd_option.py              # XD-Violence dataset options/hyperparameters
-│   ├── xd_train_sgl.py           # XD-Violence training script
-│   └── xd_test_sgl.py            # XD-Violence testing script
-└── readme.md
-```
+The model is a single Mamba2 encoder over frozen CLIP ViT-B/16 features. It can scan the
+sequence in both directions (or forward-only for streaming use), fuses several temporal
+resolutions through **one** set of parameters, and is trained with a classifier loss plus
+two auxiliary terms: a normal-prototype contrastive loss and a score-consistency
+regulariser.
 
-## Model Architecture
-```
-CLIP Features → Position Embedding → BiMambaEncoder (or MambaTemporalEncoder)
-                                    → Multi-scale Fusion (optional)
-                                    → MLP Classifier → Anomaly Scores
-```
+## What is in this repository
 
-**Training Objective:**
-```
-L = L_cls + α * L_proto + β * L_future
-```
-- `L_cls`: Binary cross-entropy classification loss with top-k pooling
-- `L_proto`: Normal prototype contrastive loss
-- `L_future`: Future score prediction MSE loss
+| Path | Content |
+| --- | --- |
+| `src/` | The pipeline behind the reported numbers: model, losses, training/testing, and the experiment driver that produced every table in the paper. |
+| `src_sgl/` | Earlier single-encoder release of the same model (one temporal scale, no experiment driver). Kept for reference; the results in the paper come from `src/`. |
+| `list/` | Video lists (`ucf_CLIP_*.csv`, `xd_CLIP_*.csv`), ground truth and the scripts that regenerate them. |
+| `results/` | The JSON audit trail of the runs quoted in the paper (one file per run, plus per-grid summaries). |
+
+## Method in one paragraph
+
+`CLIP features -> position embedding -> bidirectional Mamba2 -> shared-parameter
+multi-scale fusion -> linear scoring head`. The classifier is a top-k MIL head. The
+prototype term pulls normal video representations towards a visual prototype estimated
+from the normal videos of the batch, and pushes anomalous ones away; its repulsive half
+can act on the whole video mean (`--proto-pool mean`) or on the highest-scoring frames
+(`--proto-pool topk`, `--proto-pool soft`). The consistency term matches the score of a
+frame with the model's own score at an offset, `s_{t+offset}`, and is a smoothing
+regulariser on the scoring function rather than a forecast.
 
 ## Installation
 
-### Prerequisites
-- Python ≥ 3.8
-- PyTorch ≥ 1.12
-- CUDA-capable GPU
-
-### Install Dependencies
 ```bash
-pip install torch torchvision
+pip install torch torchvision            # CUDA build matching your driver
 pip install mamba-ssm causal-conv1d --no-build-isolation
 pip install numpy pandas scikit-learn
 ```
 
-## Datasets
-The project supports two benchmark datasets:
+`causal-conv1d` and the selective-scan CUDA extension are required: without them
+`mamba_ssm` falls back to a slow path or fails on `cuda`.
 
-- **UCF-Crime**: 13 anomaly classes + normal, large-scale real-world anomaly detection dataset
-- **XD-Violence**: 6 violence categories + normal, extreme domain violence detection dataset
+## Data
 
-### Setup
-The extracted CLIP features for UCF-Crime and XD-Violence datasets can be obtained from the following links:
+Pre-extracted CLIP features for UCF-Crime and XD-Violence are used throughout (the paper
+therefore isolates the temporal model from the feature extractor):
 
-| Benchmark   | CLIP [Baidu]                                                                                          | CLIP [OneDrive]                                                                                                                              |
-|-------------|-------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------|
-| UCF-Crime   | [Code: 7yzp](https://pan.baidu.com/s/1OKRIxoLcxt-7RYxWpylgLQ)                                       | [OneDrive](https://stuxidianeducn-my.sharepoint.com/:u:/g/personal/pengwu_stu_xidian_edu_cn/Ea86YOcp5z9KhRFDQm9a8zwBcGiGGg5BuBJtgmCVByazBQ?e=tqHLHt) |
-| XD-Violence | [Code: v8tw](https://pan.baidu.com/s/1q8DiYHcPJtrBQiiJMI7aJw)                                        | [OneDrive](https://stuxidianeducn-my.sharepoint.com/:f:/g/personal/pengwu_stu_xidian_edu_cn/Et5dWQZb2cBDs7zsrp90SrQBL_52vTRNYTdjQW6SMl0ZVA?e=foX4ph) |
+| Benchmark | CLIP [Baidu] | CLIP [OneDrive] |
+| --- | --- | --- |
+| UCF-Crime | [Code: 7yzp](https://pan.baidu.com/s/1OKRIxoLcxt-7RYxWpylgLQ) | [OneDrive](https://stuxidianeducn-my.sharepoint.com/:u:/g/personal/pengwu_stu_xidian_edu_cn/Ea86YOcp5z9KhRFDQm9a8zwBcGiGGg5BuBJtgmCVByazBQ?e=tqHLHt) |
+| XD-Violence | [Code: v8tw](https://pan.baidu.com/s/1q8DiYHcPJtrBQiiJMI7aJw) | [OneDrive](https://stuxidianeducn-my.sharepoint.com/:f:/g/personal/pengwu_stu_xidian_edu_cn/Et5dWQZb2cBDs7zsrp90SrQBL_52vTRNYTdjQW6SMl0ZVA?e=foX4ph) |
 
-After downloading, update the following files to point to your local dataset paths:
-- `list/ucf_CLIP_rgb.csv` and `list/ucf_CLIP_rgbtest.csv` for UCF-Crime
-- `list/xd_CLIP_rgb.csv` and `list/xd_CLIP_rgbtest.csv` for XD-Violence
+Each video is stored as ten crops (`...__0.npy` ... `...__9.npy`), 256 segments x 512
+dimensions, `float16`. After extracting, rewrite the path prefix of the four lists
+(`list/ucf_CLIP_rgb.csv`, `list/ucf_CLIP_rgbtest.csv`, `list/xd_CLIP_rgb.csv`,
+`list/xd_CLIP_rgbtest.csv`) to point at your local copy.
 
-## Usage
+## Reproducing the paper
 
-### Training
+All commands are run from `src/`. The protocol used for the main results is 10 epochs,
+batch 32, `lr 1e-5`, dropout 0.5, prediction stride 1.
 
-#### UCF-Crime
 ```bash
-cd src_sgl
-python ucf_train_sgl.py --bidirectional --max-epoch 10 --batch-size 64 --lr 2e-5
+cd src
+
+# Table 1 / abstract: main configuration, three seeds
+python -m experiment.run_grid --step g1 --seeds 234 789 999 \
+    --epochs 10 --batch 32 --lr 1e-5 --dropout 0.5 --pred-stride 1
+
+# Table 3: forward-only scan, multi-scale sweep, loss components,
+# the offset/pool study and the alignment control
+python -m experiment.run_grid --step g2 --seeds 234 789 999 --epochs 10 --batch 32 --lr 1e-5 --dropout 0.5 --pred-stride 1
+python -m experiment.run_grid --step g3 --seeds 789 --epochs 10 --batch 32 --lr 1e-5 --dropout 0.5 --pred-stride 1
+python -m experiment.run_grid --step g4 --seeds 789 --epochs 10 --batch 32 --lr 1e-5 --dropout 0.5 --pred-stride 1
+python -m experiment.run_grid --step g5 --seeds 789 --epochs 10 --batch 32 --lr 1e-5 --dropout 0.5 --pred-stride 1
+python -m experiment.run_grid --step g6 --seeds 789 --epochs 10 --batch 32 --lr 1e-5 --dropout 0.5 --pred-stride 1
+python -m experiment.run_grid --step g7 --seeds 789 --epochs 10 --batch 32 --lr 1e-5 --dropout 0.5 --pred-stride 1
+python -m experiment.run_grid --step g8 --seeds 789 --epochs 10 --batch 32 --lr 1e-5 --dropout 0.5 --pred-stride 1
 ```
 
-#### XD-Violence
+A single configuration can also be trained directly:
+
 ```bash
-cd src_sgl
-python xd_train_sgl.py --bidirectional --max-epoch 10 --batch-size 96 --lr 1e-5
+python -m experiment.run_one --exp full --epochs 10 --batch 32 --lr 1e-5 --dropout 0.5 --pred-stride 1 --seed 789
 ```
 
-### Testing
+Auxiliary-term switches (defaults reproduce the reported configuration):
 
-#### UCF-Crime
+| Flag | Default | Meaning |
+| --- | --- | --- |
+| `--proto-pool` | `mean` | what the repulsive half of the prototype loss acts on: `mean`, `topk`, `soft` |
+| `--proto-topk-ratio` | `0.1` | fraction of frames kept by `topk` (10 % of the video length) |
+| `--proto-tau` | `0.1` | softmax temperature for `soft` |
+| `--future-align` | `legacy` | `legacy` = the exact padded self-consistency used for every number in the paper (offset 0); `shift` = padded-free offset, to be combined with `--future-horizon` |
+| `--future-horizon` | `1` | offset `k` of `--future-align shift`; `k = 0` gives a padded-free self-consistency |
+
+Self-check of the auxiliary losses (no GPU needed):
+
 ```bash
-cd src_sgl
-python ucf_test_sgl.py --model-path model/model_ucf.pth --bidirectional
+cd src && python -m experiment.selftest_realfix     # 18 checks
 ```
 
-#### XD-Violence
+Latency and memory (single stream, batch 1):
+
 ```bash
-cd src_sgl
-python xd_test_sgl.py --model-path model/model_xd.pth --bidirectional
+cd src && python -m experiment.latency_infer --stream
 ```
 
-### Key Arguments
+## Notes on the reported numbers
 
-| Argument               | Default       | Description                                                        |
-|------------------------|---------------|--------------------------------------------------------------------|
-| `--bidirectional`      | `False`       | Enable bidirectional Mamba encoder (forward + backward scan)       |
-| `--multi-scale`        | `False`       | Enable multi-scale temporal fusion                                 |
-| `--multi-scale-factors`| `1,8,16`      | Scale factors for multi-scale fusion                               |
-| `--mamba-version`      | `mamba1`      | Mamba version (`mamba1` or `mamba2`)                               |
-| `--mamba-layers`       | `2` (UCF) / `1` (XD) | Number of Mamba layers                                     |
-| `--d-state`            | `16`          | Mamba state dimension                                                |
-| `--d-conv`             | `4`           | Mamba convolution kernel size                                      |
-| `--expand`             | `2`           | Mamba expansion factor                                             |
-| `--mlp-scale`          | `4`           | MLP hidden dimension scale factor                                  |
-| `--visual-length`      | `256`         | Input sequence length (number of segments)                         |
-| `--visual-width`       | `512`         | Feature dimension (CLIP feature dim)                               |
-| `--max-epoch`          | `10`          | Maximum training epochs                                            |
-| `--batch-size`         | `64` (UCF) / `96` (XD) | Training batch size                                       |
-| `--lr`                 | `2e-5` (UCF) / `1e-5` (XD) | Learning rate                                         |
-| `--mamba-lr-scale`     | `1.0`         | Learning rate scale for Mamba parameters (< 1 for lower Mamba LR)  |
-| `--label-smooth`       | `0.0`         | Label smoothing factor for classification loss                     |
-| `--weight-decay`       | `0.0`         | Weight decay for optimizer                                         |
-| `--dropout`            | `0.0`         | Dropout rate in Mamba blocks                                       |
-| `--model-path`         | `model/model_ucf.pth` / `model/model_xd.pth` | Path to saved model checkpoint      |
+* Every run in `results/` is annotated with the seed, epoch budget and report file. Rows
+  quoted from other papers are marked `n/r` when the original authors did not report that
+  metric on that dataset.
+* The training-step benchmark of the paper is measured on an RTX 2080 Ti with the fast
+  `mamba_ssm` path; the single-stream inference table uses an RTX 3060 and is therefore
+  not numerically comparable to it. Both are stated in the paper.
+* Checkpoints are not committed; they are available on request.
 
-### Configuration Files
-- [src_sgl/ucf_option.py](src_sgl/ucf_option.py): UCF-Crime dataset options (paths, epochs, LR, etc.)
-- [src_sgl/xd_option.py](src_sgl/xd_option.py): XD-Violence dataset options (paths, epochs, LR, etc.)
+## Acknowledgement
 
-## Acknowledgments
-We thank the authors of the original VadCLIP model and the creators of the UCF-Crime and XD-Violence datasets for making their resources publicly available.
+The CLIP wrapper, the feature lists and the multiple-instance learning scaffolding are
+adapted from the public VadCLIP release (Wu et al., AAAI 2024), and the datasets come from
+the UCF-Crime and XD-Violence authors. We thank them for making these resources public.

@@ -1,0 +1,3 @@
+exp_name,n,auc_mean,auc_std,ap_mean,ap_std
+ms_fine_causal,1,0.8604,0.0000,0.2723,0.0000
+ms_coarse_causal,1,0.8577,0.0000,0.2556,0.0000

@@ -1,0 +1,4 @@
+exp_name,n,auc_mean,auc_std,ap_mean,ap_std
+no_proto,1,0.8548,0.0000,0.2803,0.0000
+no_future,1,0.8568,0.0000,0.2758,0.0000
+cls_only,1,0.8562,0.0000,0.2859,0.0000

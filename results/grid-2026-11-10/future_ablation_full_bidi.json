@@ -1,0 +1,593 @@
+{
+  "ckpt": "model_a/grid_full_e10_s789.pt",
+  "causal": false,
+  "n": 36,
+  "cut_half": {
+    "mean_abs_delta": 0.035883662467111006,
+    "sd": 0.0832011195898967,
+    "mean_corr": 0.9825383780837765
+  },
+  "cut_3q": {
+    "mean_abs_delta": 0.01523344931128021,
+    "sd": 0.024513745710227,
+    "mean_corr": 0.9992278204044448
+  },
+  "rows": [
+    {
+      "video": "Abuse",
+      "T": 88,
+      "cut44": {
+        "mean_abs_delta": 0.0672515258193016,
+        "mean_abs_delta_outer": 0.04876604303717613,
+        "max_abs_delta": 0.10907435417175293,
+        "corr": 0.9938078800601963
+      },
+      "cut66": {
+        "mean_abs_delta": 0.022441791370511055,
+        "mean_abs_delta_outer": 0.015404137782752514,
+        "max_abs_delta": 0.030005931854248047,
+        "corr": 0.999666003488038
+      }
+    },
+    {
+      "video": "Abuse",
+      "T": 96,
+      "cut48": {
+        "mean_abs_delta": 0.02900058962404728,
+        "mean_abs_delta_outer": 0.029521415010094643,
+        "max_abs_delta": 0.0423893928527832,
+        "corr": 0.9997953709792055
+      },
+      "cut72": {
+        "mean_abs_delta": 0.02085539698600769,
+        "mean_abs_delta_outer": 0.008665231987833977,
+        "max_abs_delta": 0.06436443328857422,
+        "corr": 0.9997282625602613
+      }
+    },
+    {
+      "video": "Arrest",
+      "T": 148,
+      "cut74": {
+        "mean_abs_delta": 0.08776988834142685,
+        "mean_abs_delta_outer": 0.05489899590611458,
+        "max_abs_delta": 0.26543426513671875,
+        "corr": 0.9949371228402304
+      },
+      "cut111": {
+        "mean_abs_delta": 0.007589054759591818,
+        "mean_abs_delta_outer": 0.006087805610150099,
+        "max_abs_delta": 0.03092770278453827,
+        "corr": 0.9999923917680152
+      }
+    },
+    {
+      "video": "Arrest",
+      "T": 196,
+      "cut98": {
+        "mean_abs_delta": 0.10519902408123016,
+        "mean_abs_delta_outer": 0.049628835171461105,
+        "max_abs_delta": 0.3398421108722687,
+        "corr": 0.9987684850287926
+      },
+      "cut147": {
+        "mean_abs_delta": 0.06738443672657013,
+        "mean_abs_delta_outer": 0.04092751815915108,
+        "max_abs_delta": 0.38991373777389526,
+        "corr": 0.9987738977409215
+      }
+    },
+    {
+      "video": "Arrest",
+      "T": 226,
+      "cut113": {
+        "mean_abs_delta": 0.0018621989293023944,
+        "mean_abs_delta_outer": 0.0012313206680119038,
+        "max_abs_delta": 0.0025582313537597656,
+        "corr": 0.9999799165626834
+      },
+      "cut169": {
+        "mean_abs_delta": 0.002097097458317876,
+        "mean_abs_delta_outer": 0.0015667654806748033,
+        "max_abs_delta": 0.008083581924438477,
+        "corr": 0.9999112068357984
+      }
+    },
+    {
+      "video": "Arrest",
+      "T": 256,
+      "cut128": {
+        "mean_abs_delta": 0.011184953153133392,
+        "mean_abs_delta_outer": 0.007165815215557814,
+        "max_abs_delta": 0.026463985443115234,
+        "corr": 0.9999961126464917
+      },
+      "cut192": {
+        "mean_abs_delta": 0.005187846254557371,
+        "mean_abs_delta_outer": 0.002085695508867502,
+        "max_abs_delta": 0.026636123657226562,
+        "corr": 0.999997869762269
+      }
+    },
+    {
+      "video": "Arrest",
+      "T": 256,
+      "cut128": {
+        "mean_abs_delta": 0.012703588232398033,
+        "mean_abs_delta_outer": 0.010224119760096073,
+        "max_abs_delta": 0.07538759708404541,
+        "corr": 0.9999418345700721
+      },
+      "cut192": {
+        "mean_abs_delta": 0.002825288800522685,
+        "mean_abs_delta_outer": 0.0026232353411614895,
+        "max_abs_delta": 0.029254913330078125,
+        "corr": 0.9999811619343394
+      }
+    },
+    {
+      "video": "Arson",
+      "T": 256,
+      "cut128": {
+        "mean_abs_delta": 0.0051590315997600555,
+        "mean_abs_delta_outer": 0.0038753212429583073,
+        "max_abs_delta": 0.03243303298950195,
+        "corr": 0.9976213957976556
+      },
+      "cut192": {
+        "mean_abs_delta": 0.004819580819457769,
+        "mean_abs_delta_outer": 0.004333632066845894,
+        "max_abs_delta": 0.02863597869873047,
+        "corr": 0.9983341761479738
+      }
+    },
+    {
+      "video": "Arson",
+      "T": 197,
+      "cut98": {
+        "mean_abs_delta": 0.05609841272234917,
+        "mean_abs_delta_outer": 0.02801753394305706,
+        "max_abs_delta": 0.265758752822876,
+        "corr": 0.9991914792286333
+      },
+      "cut147": {
+        "mean_abs_delta": 0.010597176849842072,
+        "mean_abs_delta_outer": 0.0060882046818733215,
+        "max_abs_delta": 0.06449413299560547,
+        "corr": 0.9999595256379331
+      }
+    },
+    {
+      "video": "Arson",
+      "T": 79,
+      "cut39": {
+        "mean_abs_delta": 0.008247742429375648,
+        "mean_abs_delta_outer": 0.007374194450676441,
+        "max_abs_delta": 0.013101577758789062,
+        "corr": 0.9996447677825623
+      },
+      "cut59": {
+        "mean_abs_delta": 0.025074489414691925,
+        "mean_abs_delta_outer": 0.01460137777030468,
+        "max_abs_delta": 0.053197622299194336,
+        "corr": 0.9988257702003362
+      }
+    },
+    {
+      "video": "Arson",
+      "T": 112,
+      "cut56": {
+        "mean_abs_delta": 0.6817671060562134,
+        "mean_abs_delta_outer": 0.5135253071784973,
+        "max_abs_delta": 1.5022791624069214,
+        "corr": 0.6766216431537831
+      },
+      "cut84": {
+        "mean_abs_delta": 0.007173409219831228,
+        "mean_abs_delta_outer": 0.006021736189723015,
+        "max_abs_delta": 0.01165914535522461,
+        "corr": 0.9999957281885713
+      }
+    },
+    {
+      "video": "Arson",
+      "T": 256,
+      "cut128": {
+        "mean_abs_delta": 0.06429371982812881,
+        "mean_abs_delta_outer": 0.056148283183574677,
+        "max_abs_delta": 0.22669386863708496,
+        "corr": 0.9993269849082769
+      },
+      "cut192": {
+        "mean_abs_delta": 0.029703175649046898,
+        "mean_abs_delta_outer": 0.02066357433795929,
+        "max_abs_delta": 0.17407941818237305,
+        "corr": 0.9996427474185862
+      }
+    },
+    {
+      "video": "Arson",
+      "T": 89,
+      "cut44": {
+        "mean_abs_delta": 0.04274797439575195,
+        "mean_abs_delta_outer": 0.05036618188023567,
+        "max_abs_delta": 0.11647903919219971,
+        "corr": 0.9999819936092477
+      },
+      "cut66": {
+        "mean_abs_delta": 0.007727326825261116,
+        "mean_abs_delta_outer": 0.0045602526515722275,
+        "max_abs_delta": 0.01380300521850586,
+        "corr": 0.9999958820588073
+      }
+    },
+    {
+      "video": "Arson",
+      "T": 234,
+      "cut117": {
+        "mean_abs_delta": 0.025697011500597,
+        "mean_abs_delta_outer": 0.01676902361214161,
+        "max_abs_delta": 0.1331319808959961,
+        "corr": 0.9984673362604953
+      },
+      "cut175": {
+        "mean_abs_delta": 0.0041370270773768425,
+        "mean_abs_delta_outer": 0.0026318212039768696,
+        "max_abs_delta": 0.02449774742126465,
+        "corr": 0.9999093756206016
+      }
+    },
+    {
+      "video": "Assault",
+      "T": 256,
+      "cut128": {
+        "mean_abs_delta": 0.013934052549302578,
+        "mean_abs_delta_outer": 0.01101640984416008,
+        "max_abs_delta": 0.057446956634521484,
+        "corr": 0.9999242138505553
+      },
+      "cut192": {
+        "mean_abs_delta": 0.028179241344332695,
+        "mean_abs_delta_outer": 0.019486023113131523,
+        "max_abs_delta": 0.13594603538513184,
+        "corr": 0.9993477968148121
+      }
+    },
+    {
+      "video": "Assault",
+      "T": 256,
+      "cut128": {
+        "mean_abs_delta": 0.02992197684943676,
+        "mean_abs_delta_outer": 0.020089764147996902,
+        "max_abs_delta": 0.15380477905273438,
+        "corr": 0.9983203951719883
+      },
+      "cut192": {
+        "mean_abs_delta": 0.009949608705937862,
+        "mean_abs_delta_outer": 0.003890253370627761,
+        "max_abs_delta": 0.06076037883758545,
+        "corr": 0.9995899170705713
+      }
+    },
+    {
+      "video": "Assault",
+      "T": 143,
+      "cut71": {
+        "mean_abs_delta": 0.025795258581638336,
+        "mean_abs_delta_outer": 0.025112591683864594,
+        "max_abs_delta": 0.060030966997146606,
+        "corr": 0.999965451303782
+      },
+      "cut107": {
+        "mean_abs_delta": 0.05259926617145538,
+        "mean_abs_delta_outer": 0.029689114540815353,
+        "max_abs_delta": 0.2607651948928833,
+        "corr": 0.9995216338102388
+      }
+    },
+    {
+      "video": "Burglary",
+      "T": 256,
+      "cut128": {
+        "mean_abs_delta": 0.005643958225846291,
+        "mean_abs_delta_outer": 0.003812044858932495,
+        "max_abs_delta": 0.030828475952148438,
+        "corr": 0.99999066992741
+      },
+      "cut192": {
+        "mean_abs_delta": 0.005805619060993195,
+        "mean_abs_delta_outer": 0.003911362495273352,
+        "max_abs_delta": 0.0649334192276001,
+        "corr": 0.9999669370803628
+      }
+    },
+    {
+      "video": "Burglary",
+      "T": 132,
+      "cut66": {
+        "mean_abs_delta": 0.019600434228777885,
+        "mean_abs_delta_outer": 0.01887212134897709,
+        "max_abs_delta": 0.041375160217285156,
+        "corr": 0.9996754415404676
+      },
+      "cut99": {
+        "mean_abs_delta": 0.005221597850322723,
+        "mean_abs_delta_outer": 0.004101001191884279,
+        "max_abs_delta": 0.024309873580932617,
+        "corr": 0.9998804924789871
+      }
+    },
+    {
+      "video": "Burglary",
+      "T": 70,
+      "cut35": {
+        "mean_abs_delta": 0.02825401909649372,
+        "mean_abs_delta_outer": 0.033721040934324265,
+        "max_abs_delta": 0.04651600122451782,
+        "corr": 0.9999880936545695
+      },
+      "cut52": {
+        "mean_abs_delta": 0.021954497322440147,
+        "mean_abs_delta_outer": 0.020632587373256683,
+        "max_abs_delta": 0.030840232968330383,
+        "corr": 0.999997548754778
+      }
+    },
+    {
+      "video": "Burglary",
+      "T": 96,
+      "cut48": {
+        "mean_abs_delta": 0.032574787735939026,
+        "mean_abs_delta_outer": 0.008929774165153503,
+        "max_abs_delta": 0.028888225555419922,
+        "corr": 0.9999833240601285
+      },
+      "cut72": {
+        "mean_abs_delta": 0.02363414317369461,
+        "mean_abs_delta_outer": 0.022416606545448303,
+        "max_abs_delta": 0.07018101215362549,
+        "corr": 0.9999252245423971
+      }
+    },
+    {
+      "video": "Burglary",
+      "T": 225,
+      "cut112": {
+        "mean_abs_delta": 0.00327967363409698,
+        "mean_abs_delta_outer": 0.0024509693030267954,
+        "max_abs_delta": 0.007422059774398804,
+        "corr": 0.9999926457395245
+      },
+      "cut168": {
+        "mean_abs_delta": 0.02458321675658226,
+        "mean_abs_delta_outer": 0.016018414869904518,
+        "max_abs_delta": 0.13165193796157837,
+        "corr": 0.9988726997224021
+      }
+    },
+    {
+      "video": "Burglary",
+      "T": 256,
+      "cut128": {
+        "mean_abs_delta": 0.00931423157453537,
+        "mean_abs_delta_outer": 0.004961879923939705,
+        "max_abs_delta": 0.038748741149902344,
+        "corr": 0.9996486078312713
+      },
+      "cut192": {
+        "mean_abs_delta": 0.011656773276627064,
+        "mean_abs_delta_outer": 0.007269589696079493,
+        "max_abs_delta": 0.05793428421020508,
+        "corr": 0.9981572635076208
+      }
+    },
+    {
+      "video": "Burglary",
+      "T": 78,
+      "cut39": {
+        "mean_abs_delta": 0.0072736176662147045,
+        "mean_abs_delta_outer": 0.005661847069859505,
+        "max_abs_delta": 0.00776982307434082,
+        "corr": 0.9999988045120969
+      },
+      "cut58": {
+        "mean_abs_delta": 0.019041968509554863,
+        "mean_abs_delta_outer": 0.011732656508684158,
+        "max_abs_delta": 0.036293745040893555,
+        "corr": 0.9999927142246561
+      }
+    },
+    {
+      "video": "Burglary",
+      "T": 253,
+      "cut126": {
+        "mean_abs_delta": 0.0013446429511532187,
+        "mean_abs_delta_outer": 0.0008144277380779386,
+        "max_abs_delta": 0.007898092269897461,
+        "corr": 0.9999156038308549
+      },
+      "cut189": {
+        "mean_abs_delta": 0.0012593874707818031,
+        "mean_abs_delta_outer": 0.0010160556994378567,
+        "max_abs_delta": 0.010670900344848633,
+        "corr": 0.9997425760690034
+      }
+    },
+    {
+      "video": "Burglary",
+      "T": 120,
+      "cut60": {
+        "mean_abs_delta": 0.015970837324857712,
+        "mean_abs_delta_outer": 0.007593159563839436,
+        "max_abs_delta": 0.030190467834472656,
+        "corr": 0.9991531920568888
+      },
+      "cut90": {
+        "mean_abs_delta": 0.00968391913920641,
+        "mean_abs_delta_outer": 0.0031287670135498047,
+        "max_abs_delta": 0.030931711196899414,
+        "corr": 0.9994398494492104
+      }
+    },
+    {
+      "video": "Burglary",
+      "T": 256,
+      "cut128": {
+        "mean_abs_delta": 0.004981966223567724,
+        "mean_abs_delta_outer": 0.0022759491112083197,
+        "max_abs_delta": 0.008470475673675537,
+        "corr": 0.9999305815488301
+      },
+      "cut192": {
+        "mean_abs_delta": 0.02840413711965084,
+        "mean_abs_delta_outer": 0.01861301250755787,
+        "max_abs_delta": 0.15863418579101562,
+        "corr": 0.9883410248658592
+      }
+    },
+    {
+      "video": "Burglary",
+      "T": 256,
+      "cut128": {
+        "mean_abs_delta": 0.047371357679367065,
+        "mean_abs_delta_outer": 0.03287319466471672,
+        "max_abs_delta": 0.18100225925445557,
+        "corr": 0.9997137020505519
+      },
+      "cut192": {
+        "mean_abs_delta": 0.005028631538152695,
+        "mean_abs_delta_outer": 0.004197794012725353,
+        "max_abs_delta": 0.05181300640106201,
+        "corr": 0.9999814575569342
+      }
+    },
+    {
+      "video": "Burglary",
+      "T": 256,
+      "cut128": {
+        "mean_abs_delta": 0.0040724133141338825,
+        "mean_abs_delta_outer": 0.0009554579737596214,
+        "max_abs_delta": 0.004593074321746826,
+        "corr": 0.9999990092084702
+      },
+      "cut192": {
+        "mean_abs_delta": 0.004820023663341999,
+        "mean_abs_delta_outer": 0.0035743582993745804,
+        "max_abs_delta": 0.04576432704925537,
+        "corr": 0.9999431630189782
+      }
+    },
+    {
+      "video": "Explosion",
+      "T": 250,
+      "cut125": {
+        "mean_abs_delta": 0.024628330022096634,
+        "mean_abs_delta_outer": 0.013273202814161777,
+        "max_abs_delta": 0.10226988792419434,
+        "corr": 0.9999740057156031
+      },
+      "cut187": {
+        "mean_abs_delta": 0.014366401359438896,
+        "mean_abs_delta_outer": 0.009975097142159939,
+        "max_abs_delta": 0.10702896118164062,
+        "corr": 0.999946727549811
+      }
+    },
+    {
+      "video": "Explosion",
+      "T": 118,
+      "cut59": {
+        "mean_abs_delta": 0.004833722487092018,
+        "mean_abs_delta_outer": 0.0039523206651210785,
+        "max_abs_delta": 0.011203289031982422,
+        "corr": 0.9998837249103993
+      },
+      "cut88": {
+        "mean_abs_delta": 0.002540883608162403,
+        "mean_abs_delta_outer": 0.002469909144565463,
+        "max_abs_delta": 0.007433891296386719,
+        "corr": 0.9998925194576372
+      }
+    },
+    {
+      "video": "Explosion",
+      "T": 256,
+      "cut128": {
+        "mean_abs_delta": 0.12019048631191254,
+        "mean_abs_delta_outer": 0.06326670199632645,
+        "max_abs_delta": 0.5815579891204834,
+        "corr": 0.9580294411279108
+      },
+      "cut192": {
+        "mean_abs_delta": 0.004109794739633799,
+        "mean_abs_delta_outer": 0.003439940745010972,
+        "max_abs_delta": 0.022341012954711914,
+        "corr": 0.9999748410596867
+      }
+    },
+    {
+      "video": "Explosion",
+      "T": 109,
+      "cut54": {
+        "mean_abs_delta": 0.04025353491306305,
+        "mean_abs_delta_outer": 0.022292468696832657,
+        "max_abs_delta": 0.06506471335887909,
+        "corr": 0.9993880437573299
+      },
+      "cut81": {
+        "mean_abs_delta": 0.013069810345768929,
+        "mean_abs_delta_outer": 0.011645795777440071,
+        "max_abs_delta": 0.04154270887374878,
+        "corr": 0.9998640903952
+      }
+    },
+    {
+      "video": "Explosion",
+      "T": 156,
+      "cut78": {
+        "mean_abs_delta": 0.05427347123622894,
+        "mean_abs_delta_outer": 0.03763750568032265,
+        "max_abs_delta": 0.17014837265014648,
+        "corr": 0.9997879779593702
+      },
+      "cut117": {
+        "mean_abs_delta": 0.02866464853286743,
+        "mean_abs_delta_outer": 0.02227850817143917,
+        "max_abs_delta": 0.15654510259628296,
+        "corr": 0.9997913317650546
+      }
+    },
+    {
+      "video": "Explosion",
+      "T": 98,
+      "cut49": {
+        "mean_abs_delta": 0.10905749350786209,
+        "mean_abs_delta_outer": 0.07564124464988708,
+        "max_abs_delta": 0.14087152481079102,
+        "corr": 0.7603554676636077
+      },
+      "cut73": {
+        "mean_abs_delta": 0.2468806505203247,
+        "mean_abs_delta_outer": 0.1453697681427002,
+        "max_abs_delta": 0.812723696231842,
+        "corr": 0.9997156849505742
+      }
+    },
+    {
+      "video": "Explosion",
+      "T": 207,
+      "cut103": {
+        "mean_abs_delta": 0.028296425938606262,
+        "mean_abs_delta_outer": 0.01909538172185421,
+        "max_abs_delta": 0.08600163459777832,
+        "corr": 0.999680890166021
+      },
+      "cut155": {
+        "mean_abs_delta": 0.06625931710004807,
+        "mean_abs_delta_outer": 0.04728657007217407,
+        "max_abs_delta": 0.4280703067779541,
+        "corr": 0.9956020410527924
+      }
+    }
+  ]
+}

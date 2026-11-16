@@ -1,0 +1,144 @@
+You are an expert in generating publication-quality SVG diagrams.
+Generate an SVG of the MambaResBlock detailed structure diagram for the MambaVAD paper.
+
+## General specs
+- Canvas: 1000px × 600px, white background
+- Font: Arial/Helvetica, sans-serif
+- Style: flat vector, clean lines, no 3D, no shadows, no gradients
+- Export ONLY the raw SVG code between ```svg and ``` tags
+
+## Color palette
+- Main block fill: #d6eaf8 (light blue), border #3498db
+- Norm layers: #f9e79f (light yellow), border #f1c40f
+- Mamba SSM internal: #d5f5e3 (light green), border #27ae60
+- MLP internal: #fdebd0 (light orange), border #e67e22
+- Residual paths: dotted line, #e74c3c
+- Addition nodes: #ffffff, border #555, filled circle
+- Text: #2c3e50
+- Arrows: #555555, stroke-width 2
+
+## Layout — Two panels side by side
+
+### Panel A: MambaResBlock Overall (left 55%)
+Position: x=20 to x=550
+
+Title at top (y=20): "MambaResBlock" 18px bold, color #2c3e50
+Subtitle (y=42): "Pre-LN → Mamba → Residual → Pre-LN → MLP → Residual" 12px italic, #555
+
+The block is a vertical flow from top to bottom:
+
+1. **Input** (y=70): Rounded rect "x" (40×25), centered
+
+2. **First residual sub-layer** (y=100 to y=220):
+   - Down arrow from input splits into two paths:
+     
+     Path A (main, straight down):
+       → Rect "LayerNorm" (80×30) at (250, 105), fill #f9e79f, border #f1c40f
+       → Arrow → Large rect "Mamba SSM" (160×50) at (210, 150), fill #d5f5e3, border #27ae60, bold text "Mamba SSM (S6 / SSD)"
+       → Arrow → Rect "Dropout" (70×25) at (255, 215), fill #eee, border #999
+       → Arrow → Addition ⊕ node (circle, r=12, fill white, border #555)
+     
+     Path B (residual, curved):
+       → Curved dotted red line from input (x=80) going right, then down to the ⊕ node
+       → Label on this line: "Residual" 10px italic, #e74c3c
+     
+     ⊕ node output → continues down
+
+3. **Second residual sub-layer** (y=250 to y=400):
+   → Rect "LayerNorm" (80×30) at (250, 260), fill #f9e79f, border #f1c40f
+   → Arrow → Large rect "MLP" (180×70) at (200, 305), fill #fdebd0, border #e67e22
+     Inside MLP rect, three stacked items:
+       Line 1: "c_fc: Linear(D → D×scale)" 10px
+       Line 2: "QuickGELU" 10px  
+       Line 3: "c_proj: Linear(D×scale → D)" 10px
+   → Arrow → Rect "Dropout" (70×25) at (255, 390), fill #eee, border #999
+   → Arrow → Addition ⊕ node (center at 295, 430)
+
+   Residual path: dotted red curved line from previous ⊕ output to this ⊕
+
+4. **Output** (y=445): Arrow from ⊕ → Rounded rect "x'" (40×25) at (275, 445)
+   Label right of output: "to next block or LayerNorm" 11px italic, #555
+
+**Key annotation on Panel A right side** (x=430):
+Vertical text: "× N stacked blocks" 12px bold, #3498db
+Right brace "}" spanning from y=100 to y=445 indicating the stack
+Below brace: "MambaTemporalEncoder" 13px bold, #2c3e50
+
+### Panel B: Mamba SSM Internal (right 45%)
+Position: x=570 to x=990
+
+Title at top (y=20): "Inside Mamba SSM" 18px bold, color #2c3e50
+Subtitle (y=42): "Selective State Space Model (Mamba1 S6 / Mamba2 SSD)" 12px italic, #555
+
+Flow from bottom to top (or top to bottom — use top to bottom):
+
+1. **Input** (y=70): Rounded rect "u (B, L, D)" (90×25), centered
+
+2. **Expansion & Projection** (y=110):
+   → Rect "in_proj" (140×35) at (655, 110), fill #d5f5e3, border #27ae60
+     Text: "Linear(D → 2D + D×dt_rank)" 10px
+   → Arrow splits into three branches:
+
+   Branch 1 (left, y=115→165):
+     → Rect "x" label
+     → Conv1d + SiLU at (590, 175) [110×35]
+     Text: "Conv1d + SiLU"
+
+   Branch 2 (center, y=115→165):
+     → Rect "z" label  
+     → SiLU activation at (740, 175) [70×35]
+     Text: "SiLU"
+
+   Branch 3 (right, y=115→125→165):
+     → Rect "dt" label
+     → dt_proj + softplus at (860, 175) [110×35]
+     Text: "dt_proj + Softplus"
+
+3. **SSM Scan** (center, y=215 to y=330):
+   All three branches converge into the main SSM block:
+   
+   Large rounded rect "Selective SSM Scan" (280×115) at (635, 215), fill white, border #3498db, stroke-width 3
+
+   Inside this large block, show the discretization and scan:
+   
+   Top section (y=230): Small eqn box "Δ = softplus(dt_proj(dt))" 10px
+   "B = projection_B(x)" 10px
+   "C = projection_C(x)" 10px
+
+   Middle section (y=265): "Ā = exp(Δ · A)" 10px
+   "B̄ = (Δ · B)" 10px
+
+   Bottom section (y=290): Larger text "y_t = C · h_t" 11px bold
+   "h_t = Ā · h_{t-1} + B̄ · x_t" 11px bold
+   
+   Right side of the box: small annotation "Selective Scan\nO(T) parallel scan" 10px italic, #27ae60
+
+4. **Output projection** (y=355):
+   → Arrow from SSM → Rect "out_proj" (140×35) at (655, 365), fill #d5f5e3, border #27ae60
+     Text: "Linear(D → D)" 10px
+
+5. **Output** (y=415):
+   → Arrow → Rounded rect "y (B, L, D)" (90×25)
+   
+   Plus a skip-connection annotation: dotted line from "z" branch bypassing the SSM
+   Arrow from SiLU(z) → multiply with SSM output → out_proj
+   Small multiply sign ⊗ at (750, 350)
+
+**Key annotation under Panel B** (y=470):
+"★ Mamba1 = S6 (selective scan) | Mamba2 = SSD (structured state space dual)" 11px, #555
+
+## Additional elements
+
+Connection arrow between panels:
+- From bottom of Panel A output "to next block" → curved arrow pointing to "× N stacked blocks"
+- Visual cue that N stacked MambaResBlocks = MambaTemporalEncoder
+
+Innovation callout at bottom center (y=540):
+"★ O(T) linear complexity vs Transformer O(T²) — enabling long video sequence modeling" 12px bold, #e74c3c
+
+## Arrows
+- All data flow arrows: stroke #555, stroke-width 1.5, triangle arrowhead
+- Residual paths: dotted stroke #e74c3c, stroke-width 2
+- Arrowhead size: 6×5px
+
+Output ONLY the raw SVG code between ```svg and ``` tags.

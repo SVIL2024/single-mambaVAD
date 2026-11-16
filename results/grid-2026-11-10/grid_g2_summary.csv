@@ -1,0 +1,2 @@
+exp_name,n,auc_mean,auc_std,ap_mean,ap_std
+causal,3,0.8560,0.0033,0.2733,0.0051

@@ -1,0 +1,4 @@
+exp_name,n,auc_mean,auc_std,ap_mean,ap_std
+future_k4,1,0.8559,0.0000,0.2996,0.0000
+causal_no_future,1,0.8617,0.0000,0.2732,0.0000
+causal_future_k4,1,0.8599,0.0000,0.2649,0.0000

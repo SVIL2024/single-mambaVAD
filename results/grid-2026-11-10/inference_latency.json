@@ -1,0 +1,75 @@
+{
+  "params": 13080066,
+  "batch": 1,
+  "directional": "bidirectional",
+  "rows": [
+    {
+      "T": 32,
+      "latency_ms": 14.6,
+      "per_frame_ms": 0.455,
+      "peak_mem_MB": 60.3
+    },
+    {
+      "T": 64,
+      "latency_ms": 14.7,
+      "per_frame_ms": 0.229,
+      "peak_mem_MB": 61.3
+    },
+    {
+      "T": 128,
+      "latency_ms": 14.0,
+      "per_frame_ms": 0.11,
+      "peak_mem_MB": 64.2
+    },
+    {
+      "T": 256,
+      "latency_ms": 14.0,
+      "per_frame_ms": 0.055,
+      "peak_mem_MB": 68.4
+    },
+    {
+      "T": 512,
+      "latency_ms": 14.8,
+      "per_frame_ms": 0.029,
+      "peak_mem_MB": 77.0
+    },
+    {
+      "T": 1024,
+      "latency_ms": 14.3,
+      "per_frame_ms": 0.014,
+      "peak_mem_MB": 94.2
+    }
+  ],
+  "stream": [
+    {
+      "window": 128,
+      "stride": 64,
+      "total": 1000,
+      "chunks": 14,
+      "wall_s": 0.199,
+      "fps": 5015.1,
+      "latency_per_chunk_ms": 14.2,
+      "peak_mem_MB": 65.9
+    },
+    {
+      "window": 256,
+      "stride": 128,
+      "total": 1000,
+      "chunks": 6,
+      "wall_s": 0.085,
+      "fps": 11770.1,
+      "latency_per_chunk_ms": 14.2,
+      "peak_mem_MB": 69.9
+    },
+    {
+      "window": 256,
+      "stride": 256,
+      "total": 1000,
+      "chunks": 3,
+      "wall_s": 0.043,
+      "fps": 23332.0,
+      "latency_per_chunk_ms": 14.3,
+      "peak_mem_MB": 69.9
+    }
+  ]
+}

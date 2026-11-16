@@ -1,0 +1,3 @@
+exp_name,n,auc_mean,auc_std,ap_mean,ap_std
+proto_topk,1,0.8565,0.0000,0.2782,0.0000
+proto_soft,1,0.8566,0.0000,0.2785,0.0000
